@@ -23,11 +23,7 @@
                         <td>{{ $loop->index+1 }}</td>
                         <td>{{ $product->category?->name }}</td>
                         <td>
-                            @if ($product->image && file_exists(public_path('images/products/'.$product->image)))
                             <img src="{{ $product->image }}" height="50" width="50" />
-                            @else
-                            <img src="{{ App\Constant\Constants::DEFAULT_IMAGE_PATH }}" height="50" width="50" />
-                            @endif
                         
                             {{ $product->name ?? '' }}
                         </td>

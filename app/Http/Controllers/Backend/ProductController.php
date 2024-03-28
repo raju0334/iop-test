@@ -7,8 +7,10 @@ use App\Http\Requests\ProductRequest;
 use App\Http\Requests\ProductStoreRequest;
 use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Support\Str;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
+use Stringable;
 
 class ProductController extends Controller
 {
@@ -21,7 +23,7 @@ class ProductController extends Controller
 
    public function showProductList()
    {
-    $products = Product::all();
+    $products = Product::with('category')->get();
     return view('backend.pages.product.index',compact('products'));
    }
 
@@ -48,13 +50,12 @@ class ProductController extends Controller
    }
 
    public function productUpdate(ProductRequest $request, $id)
-   {
+    {
         $product = Product::find($id);
         $this->productServices->productUpdate($request, $product);
         $this->setSuccessMessage('info', 'product has been updated');
-       return redirect()->back();
-
-   }
+        return redirect()->back();
+    }
 
 
    public function productDestroy($id)
